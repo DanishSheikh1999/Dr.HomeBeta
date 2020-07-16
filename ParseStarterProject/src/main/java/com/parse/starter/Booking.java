@@ -113,6 +113,7 @@ public class Booking extends AppCompatActivity {
 
 
 
+
     }
 
     public void getDocImage() {
@@ -142,21 +143,25 @@ public class Booking extends AppCompatActivity {
     public void getDocSlots() throws ParseException {
         avail.removeAll(avail);
         avail.addAll(Actualavail);
+        onCurrentDay = Date.getText().equals(date.format(today).toUpperCase());
         ParseQuery<ParseObject> slotquery = new ParseQuery<>("Appointments");
         slotquery.whereEqualTo("Doctor",doctor);
         slotquery.whereEqualTo("Day",Date.getText());
         List<ParseObject> objects= slotquery.find();
         if(objects.size()>0){
-            for(ParseObject object : objects)
-                avail.set(slots.indexOf(object.get("Time").toString()),"Booked");}
+            for(ParseObject object : objects){
+                Log.i("Time",object.get("Time").toString());
+                if (slots.indexOf(object.get("Time").toString())!=-1){
+                avail.set(slots.indexOf(object.get("Time").toString()),"Booked");}}
 
         Log.i("Avail",avail.toString());
-        onCurrentDay = Date.getText().equals(date.format(today).toUpperCase());
 
-        bookingAdapter.notifyDataSetChanged();
-        loadingScreen.stoploadingScreen();
+
+
 
     }
+        bookingAdapter.notifyDataSetChanged();
+    loadingScreen.stoploadingScreen();}
 //    public void getTimeslots(){
 //        query = ParseUser.getQuery();
 //        Log.i("Name",doctor);
@@ -322,11 +327,8 @@ public class Booking extends AppCompatActivity {
                         timeavail.add("Unavailable");
                     else
                         timeavail.add("Available");
-                    String day = (current_time < Double.parseDouble(slots.get(slots.size() - 1).substring(0, slots.get(slots.size() - 1).indexOf('-')).replace(':', '.')) ? "Today" : "Tommorow");
-                    if (day.equals("Today"))
-                        Date.setText(date.format(today).toUpperCase());
-
                 }
+                Date.setText(date.format(today).toUpperCase());
                 bookingAdapter.notifyDataSetChanged();
                 loadingScreen.stoploadingScreen();
             }
@@ -355,7 +357,7 @@ public class Booking extends AppCompatActivity {
             bookingAdapter.notifyDataSetChanged();
         }
         Log.i("Avail", avail.toString());
-        if (avail.get(pos).equals("Booked") || timeavail.get(pos).equals("Unavailable")) {
+        if (avail.get(pos).equals("Booked") || (timeavail.get(pos).equals("Unavailable")&&onCurrentDay)) {
             Log.i("avail", avail.get(pos));
             Toast.makeText(this, "Book another session", Toast.LENGTH_SHORT).show();
 
@@ -487,6 +489,7 @@ public class Booking extends AppCompatActivity {
               //  Toast.makeText(getApplicationContext(), "Working", Toast.LENGTH_SHORT).show();
                 choosenDate = datePicker.getDayOfMonth() + " " + getMonth(datePicker.getMonth()+1);
                 Date.setText(choosenDate.toUpperCase());
+                Log.i("Currrent", (String) Date.getText());
                 try {
                     getDocSlots();
                 } catch (ParseException e) {
