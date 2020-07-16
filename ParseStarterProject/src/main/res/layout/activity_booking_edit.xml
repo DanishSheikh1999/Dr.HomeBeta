@@ -143,9 +143,21 @@
                 android:textSize="25sp"/>
         </androidx.cardview.widget.CardView>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <Button
+            android:id="@+id/button3"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/button_rounded"
+            android:fontFamily="@font/advent_pro"
+            android:onClick="book"
+            android:text="Book"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            />
+
 
             <ScrollView
                 android:id="@+id/scrollView2"
@@ -170,27 +182,7 @@
                     app:layout_constraintVertical_bias="0.0" />
             </ScrollView>
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="162dp"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="161dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/button_rounded"
-                android:fontFamily="@font/advent_pro"
-                android:onClick="book"
-                android:text="Book"
-                android:textColor="@color/colorWhite"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
